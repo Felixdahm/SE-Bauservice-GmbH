@@ -10,22 +10,10 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
-  <!-- Topbar: E-Mail -->
-  <div class="topbar">
-    <div class="container topbar-inner">
-      <a href="mailto:info@sebauservice.de" class="topbar-contact">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-        </svg>
-        info@sebauservice.de
-      </a>
-    </div>
-  </div>
-
   <!-- Hauptnavigation -->
-  <div class="container header-inner">
+  <div class="header-inner">
     <a href="/" class="logo" aria-label="SE Bauservice GmbH – Startseite">
-      <img src="/Logo-mitschrift.png" alt="SE Bauservice GmbH" class="logo-img" />
+      <span class="logo-text">SE BAUSERVICE GMBH</span>
     </a>
 
     <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">
@@ -45,9 +33,9 @@ const currentPath = Astro.url.pathname;
           </li>
         ))}
       </ul>
-
-      <a href="/kontakt" class="btn btn-primary header-cta">Jetzt anfragen</a>
     </nav>
+
+    <a href="/kontakt" class="btn btn-primary header-cta">Jetzt anfragen</a>
   </div>
 </header>
 
@@ -69,53 +57,35 @@ const currentPath = Astro.url.pathname;
     background: var(--color-primary);
   }
 
-  /* Topbar */
-  .topbar {
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .topbar-inner {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-  .topbar-contact {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.6);
-    transition: color 0.18s;
-  }
-  .topbar-contact:hover {
-    color: rgba(255,255,255,0.95);
-  }
-
   /* Hauptzeile */
   .header-inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 40px;
-    height: 68px;
+    height: 90px;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .logo {
     flex-shrink: 0;
     display: flex;
     align-items: center;
+    justify-self: start;
   }
 
-  .logo-img {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
+  .logo-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #fff;
+    white-space: nowrap;
   }
 
   .nav {
     display: flex;
     align-items: center;
-    gap: 36px;
-    margin-left: auto;
+    justify-self: center;
   }
 
   .nav-list {
@@ -138,6 +108,7 @@ const currentPath = Astro.url.pathname;
     padding: 10px 22px;
     font-size: 0.875rem;
     white-space: nowrap;
+    justify-self: end;
   }
 
   /* Hamburger */
@@ -149,7 +120,8 @@ const currentPath = Astro.url.pathname;
     border: none;
     cursor: pointer;
     padding: 4px;
-    margin-left: auto;
+    justify-self: end;
+    grid-column: 3;
   }
   .nav-toggle span {
     display: block;
@@ -161,13 +133,13 @@ const currentPath = Astro.url.pathname;
   }
 
   @media (max-width: 768px) {
-    .topbar { display: none; }
     .nav-toggle { display: flex; }
+    .header-cta { display: none; }
 
     .nav {
       display: none;
       position: absolute;
-      top: 68px;
+      top: 90px;
       left: 0;
       right: 0;
       flex-direction: column;
@@ -189,11 +161,6 @@ const currentPath = Astro.url.pathname;
       padding: 13px 0;
       font-size: 1rem;
       border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .header-cta {
-      margin-top: 16px;
-      width: 100%;
-      text-align: center;
     }
   }
 </style>
