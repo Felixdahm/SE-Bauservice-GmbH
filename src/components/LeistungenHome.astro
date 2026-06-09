@@ -1,0 +1,235 @@
+---
+const blocks = [
+  {
+    eyebrow: 'Trockenbau',
+    heading: 'Präzise Wände, die halten was sie sollen.',
+    text: 'Ob Raumaufteilung, neue Installationsführung oder abgehängte Decke – wir setzen Trockenbauprojekte handwerklich sauber um. Für Privat- und Gewerbekunden, im Neubau und im Bestand.',
+    href: '/leistungen#trockenbau',
+    image: '/Trockenbau.jpeg',
+    imageAlt: 'Trockenbau-Arbeiten',
+  },
+  {
+    eyebrow: 'Akustikbau',
+    heading: 'Weniger Lärm. Bessere Räume.',
+    text: 'Schallschutzwände, Akustikdecken, schallentkoppelte Konstruktionen – wir wissen, worauf es beim Akustikbau ankommt. Kein Rätselraten, sondern handwerklich richtig ausgeführt.',
+    href: '/leistungen#akustikbau',
+    image: '/Akustikbau.jpeg',
+    imageAlt: 'Akustikbau Schallschutz',
+  },
+  {
+    eyebrow: 'Abbrucharbeiten',
+    heading: 'Platz schaffen, bevor es losgeht.',
+    text: 'Wände raus, Decken runter, Estrich weg – wir erledigen Abbrucharbeiten aller Art schnell und ordentlich. Entsorgung organisieren wir mit, damit Sie sich um nichts kümmern müssen.',
+    href: '/leistungen#abbruch',
+    image: '/Abbau.jpeg',
+    imageAlt: 'Abbrucharbeiten auf der Baustelle',
+  },
+]
+---
+
+<section class="leistungen-home">
+  <div class="container">
+    <div class="feature-grid">
+
+      <!-- Linke Spalte: Textblöcke, scrollen normal -->
+      <div class="text-col">
+        {blocks.map((block, i) => (
+          <div class="text-block" data-scroll-index={i}>
+            <div class="text-inner">
+              <p class="eyebrow">{block.eyebrow}</p>
+              <h2>{block.heading}</h2>
+              <p class="block-desc">{block.text}</p>
+              <div class="block-actions">
+                <a href="/kontakt" class="btn btn-primary">Jetzt anfragen</a>
+                <a href={block.href} class="btn btn-outline-dark">Mehr erfahren</a>
+              </div>
+            </div>
+            <!-- Bild nur auf Mobile sichtbar -->
+            <div class="mobile-image">
+              <img src={block.image} alt={block.imageAlt} loading="lazy" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Rechte Spalte: Sticky Bild-Container -->
+      <div class="sticky-col" aria-hidden="true">
+        {blocks.map((block, i) => (
+          <div class="feature-image" data-image-index={i}>
+            <img src={block.image} alt={block.imageAlt} loading={i === 0 ? 'eager' : 'lazy'} />
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .leistungen-home {
+    padding: 0;
+  }
+
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    position: relative; /* Sticky-Containment-Kontext */
+    align-items: start;
+  }
+
+  /* ── Linke Spalte (Text) ── */
+  .text-col {
+    /* Natürliche Höhe durch die Textblöcke */
+  }
+
+  .text-block {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .text-inner {
+    max-width: 35rem;
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    color: var(--color-heading);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .block-desc {
+    color: var(--color-text);
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  .block-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  .mobile-image {
+    display: none;
+  }
+
+  /* ── Rechte Spalte (Sticky Bild) ── */
+  .sticky-col {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-self: start; /* Nicht auf Zeilenhöhe strecken */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-image {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 100%;
+    height: fit-content;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    border-radius: 1.5rem;
+    overflow: hidden;
+  }
+
+  .feature-image img {
+    width: 100%;
+    height: 65vh;
+    object-fit: cover;
+    display: block;
+    border-radius: 1.5rem;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .feature-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .sticky-col {
+      display: none;
+    }
+
+    .text-block {
+      height: auto;
+      padding: 4rem 0;
+      border-top: 1px solid var(--color-border, #e8e8e8);
+    }
+
+    .text-block:first-child {
+      border-top: none;
+    }
+
+    .mobile-image {
+      display: block;
+      margin-top: 2rem;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .mobile-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    .block-desc {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<script>
+  const textBlocks = document.querySelectorAll('[data-scroll-index]');
+  const images = document.querySelectorAll('[data-image-index]');
+
+  if (textBlocks.length && images.length) {
+    // Erstes Bild sofort sichtbar
+    (images[0] as HTMLElement).style.opacity = '1';
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt((entry.target as HTMLElement).dataset.scrollIndex ?? '0');
+            images.forEach((img, i) => {
+              (img as HTMLElement).style.opacity = i === index ? '1' : '0';
+            });
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    textBlocks.forEach((block) => observer.observe(block));
+  }
+</script>

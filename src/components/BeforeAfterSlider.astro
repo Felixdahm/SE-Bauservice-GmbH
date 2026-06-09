@@ -1,0 +1,162 @@
+---
+interface Props {
+  beforeSrc: string;
+  afterSrc:  string;
+  beforeAlt?: string;
+  afterAlt?:  string;
+}
+const {
+  beforeSrc,
+  afterSrc,
+  beforeAlt = 'Vor der Sanierung',
+  afterAlt  = 'Nach der Sanierung',
+} = Astro.props;
+---
+
+<div class="ba-slider" aria-label="Vorher-Nachher-Vergleich">
+  <!-- Nachher-Bild (hinten, vollflächig) -->
+  <img src={afterSrc} alt={afterAlt} class="ba-img ba-after" draggable="false" />
+
+  <!-- Vorher-Bild (vorne, wird via clip-path beschnitten) -->
+  <div class="ba-before-wrap">
+    <img src={beforeSrc} alt={beforeAlt} class="ba-img ba-before" draggable="false" />
+  </div>
+
+  <!-- Trennlinie + Handle -->
+  <div class="ba-divider" aria-hidden="true">
+    <div class="ba-handle">
+      <svg class="ba-arrow ba-arrow-left" width="10" height="18" viewBox="0 0 10 18" fill="none">
+        <path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <svg class="ba-arrow ba-arrow-right" width="10" height="18" viewBox="0 0 10 18" fill="none">
+        <path d="M1 1l8 8-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Labels -->
+  <span class="ba-label ba-label-before">Vorher</span>
+  <span class="ba-label ba-label-after">Nachher</span>
+</div>
+
+<script>
+  const sliders = document.querySelectorAll<HTMLElement>('.ba-slider');
+
+  sliders.forEach(slider => {
+    const beforeWrap = slider.querySelector<HTMLElement>('.ba-before-wrap')!;
+    const divider    = slider.querySelector<HTMLElement>('.ba-divider')!;
+    let active = false;
+    let pos = 50; // Startposition in %
+
+    function setPos(x: number) {
+      const rect = slider.getBoundingClientRect();
+      pos = Math.min(100, Math.max(0, ((x - rect.left) / rect.width) * 100));
+      beforeWrap.style.clipPath = `inset(0 ${100 - pos}% 0 0)`;
+      divider.style.left = `${pos}%`;
+    }
+
+    // Initiale Position
+    setPos(slider.getBoundingClientRect().left + slider.offsetWidth * 0.5);
+
+    // Mouse
+    divider.addEventListener('mousedown', () => { active = true; });
+    slider.addEventListener('mousemove', e => { if (active) setPos(e.clientX); });
+    window.addEventListener('mouseup', () => { active = false; });
+
+    // Touch
+    divider.addEventListener('touchstart', e => { active = true; e.preventDefault(); }, { passive: false });
+    slider.addEventListener('touchmove', e => {
+      if (active) { setPos(e.touches[0].clientX); e.preventDefault(); }
+    }, { passive: false });
+    window.addEventListener('touchend', () => { active = false; });
+
+    // Klick irgendwo auf den Slider
+    slider.addEventListener('click', e => setPos(e.clientX));
+  });
+</script>
+
+<style>
+  .ba-slider {
+    position: relative;
+    width: 100%;
+    flex: 1 1 auto;
+    align-self: stretch;
+    overflow: hidden;
+    cursor: col-resize;
+    user-select: none;
+    background: #111;
+    min-height: 300px;
+  }
+
+  .ba-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    pointer-events: none;
+  }
+
+  .ba-before-wrap {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 50% 0 0);
+    transition: clip-path 0.01s;
+  }
+  .ba-before-wrap .ba-img {
+    position: absolute;
+  }
+
+  /* Trennlinie */
+  .ba-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: rgba(255,255,255,0.9);
+    transform: translateX(-50%);
+    pointer-events: all;
+    cursor: col-resize;
+    z-index: 10;
+  }
+
+  /* Kreisförmiger Handle */
+  .ba-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #1A2733;
+  }
+
+  .ba-arrow { flex-shrink: 0; }
+
+  /* Labels */
+  .ba-label {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    background: rgba(0,0,0,0.35);
+    padding: 4px 10px;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .ba-label-before { left: 20px; }
+  .ba-label-after  { right: 20px; }
+</style>

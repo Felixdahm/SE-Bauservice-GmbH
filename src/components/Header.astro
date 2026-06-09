@@ -1,0 +1,196 @@
+---
+const navLinks = [
+  { label: 'Startseite',  href: '/' },
+  { label: 'Leistungen',  href: '/leistungen' },
+  { label: 'Über uns',    href: '/ueber-uns' },
+  { label: 'Kontakt',     href: '/kontakt' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <!-- Topbar: E-Mail -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a href="mailto:info@sebauservice.de" class="topbar-contact">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+        info@sebauservice.de
+      </a>
+    </div>
+  </div>
+
+  <!-- Hauptnavigation -->
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="SE Bauservice GmbH – Startseite">
+      SE Bauservice GmbH
+    </a>
+
+    <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" aria-label="Hauptnavigation">
+      <ul class="nav-list">
+        {navLinks.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class:list={['nav-link', { active: currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <a href="/kontakt" class="btn btn-primary header-cta">Jetzt anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
+  const nav = document.querySelector('.nav') as HTMLElement;
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    nav.classList.toggle('nav--open');
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-primary);
+  }
+
+  /* Topbar */
+  .topbar {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .topbar-inner {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .topbar-contact {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.18s;
+  }
+  .topbar-contact:hover {
+    color: rgba(255,255,255,0.95);
+  }
+
+  /* Hauptzeile */
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    height: 68px;
+  }
+
+  .logo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    margin-left: auto;
+  }
+
+  .nav-list {
+    display: flex;
+    gap: 32px;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.72);
+    transition: color 0.18s;
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    color: #fff;
+  }
+
+  .header-cta {
+    padding: 10px 22px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  /* Hamburger */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  @media (max-width: 768px) {
+    .topbar { display: none; }
+    .nav-toggle { display: flex; }
+
+    .nav {
+      display: none;
+      position: absolute;
+      top: 68px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      background: var(--color-primary);
+      padding: 16px 24px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav.nav--open { display: flex; }
+
+    .nav-list {
+      flex-direction: column;
+      gap: 0;
+      width: 100%;
+    }
+    .nav-link {
+      display: block;
+      padding: 13px 0;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .header-cta {
+      margin-top: 16px;
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

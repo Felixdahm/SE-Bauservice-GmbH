@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Impressum">
+  <section class="impressum-section">
+    <div class="container">
+      <h1>Impressum</h1>
+
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>
+        SE Bauservice GmbH<br />
+        Kreuzweg 10<br />
+        20099 Hamburg<br />
+        Deutschland
+      </p>
+
+      <h2>Vertreten durch</h2>
+      <p>Shabnam Hassin (Geschäftsführerin)</p>
+
+      <h2>Kontakt</h2>
+      <p>E-Mail: <a href="mailto:info@sebauservice.de">info@sebauservice.de</a></p>
+
+      <h2>Handelsregister</h2>
+      <p>
+        Registergericht: Amtsgericht Hamburg<br />
+        Registernummer: HRB 8636
+      </p>
+
+      <h2>Umsatzsteuer-ID</h2>
+      <p>
+        Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:<br />
+        DE373561816
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .impressum-section {
+    padding: 80px 0 100px;
+  }
+  .impressum-section h1 {
+    margin-bottom: 48px;
+  }
+  .impressum-section h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 40px;
+    margin-bottom: 8px;
+  }
+  .impressum-section p {
+    line-height: 1.7;
+  }
+  .impressum-section a {
+    color: var(--color-accent);
+  }
+</style>

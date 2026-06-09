@@ -1,0 +1,141 @@
+---
+import BeforeAfterSlider from './BeforeAfterSlider.astro';
+---
+
+<section class="hero">
+  <!-- Linke Seite: Text auf hellem Hintergrund -->
+  <div class="hero-text">
+    <div class="hero-text-inner">
+      <p class="section-label">Trockenbau · Akustikbau · Abbruch</p>
+      <h1>Handwerk, das hält.<br />Termine, die stimmen.</h1>
+      <p class="hero-sub">
+        Wir übernehmen Trockenbau-, Akustik- und Abbrucharbeiten für Privat-
+        und Gewerbekunden in Hamburg — zuverlässig, sauber und mit über
+        10 Jahren Erfahrung auf der Baustelle.
+      </p>
+      <div class="hero-actions">
+        <a href="/kontakt" class="btn btn-primary">Jetzt anfragen</a>
+        <a href="/leistungen" class="btn btn-outline-dark">Unsere Leistungen</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rechte Seite: Before/After-Slider, bis zum Rand -->
+  <div class="hero-slider">
+    <BeforeAfterSlider
+      beforeSrc="/Bau%20Anfang.jpeg"
+      afterSrc="/Baufertig.jpeg"
+      beforeAlt="Rohbau vor dem Trockenbau"
+      afterAlt="Fertig ausgebauter Raum"
+    />
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5rem;
+    align-items: center;
+    height: calc(100svh - 104px);
+    min-height: 600px;
+    max-height: 900px;
+    padding: 0 5%;
+  }
+
+  .hero-text {
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-text-inner {
+    width: 100%;
+    max-width: 35rem;
+  }
+
+  .section-label {
+    color: var(--color-accent);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    color: var(--color-heading);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    color: var(--color-text);
+    font-size: 1.125rem;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .hero-slider {
+    display: flex;
+    align-items: center;
+    height: 75%;
+  }
+
+  .hero-slider :global(.ba-slider) {
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.13);
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      column-gap: 0;
+      row-gap: 1.25rem;
+      padding: 1.75rem 5%;
+      height: calc(100svh - 68px);
+      min-height: auto;
+      max-height: none;
+    }
+
+    .hero-text {
+      align-items: flex-start;
+    }
+
+    .hero-text-inner {
+      max-width: 100%;
+    }
+
+    .section-label {
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-slider {
+      height: 100%;
+      min-height: 180px;
+    }
+  }
+</style>

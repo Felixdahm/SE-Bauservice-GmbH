@@ -1,0 +1,125 @@
+---
+const leistungen = ['Trockenbau', 'Akustikbau', 'Abbrucharbeiten'];
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+
+    <div class="footer-brand">
+      <p class="footer-logo">SE Bauservice GmbH</p>
+      <address>
+        Kreuzweg 10<br />
+        20099 Hamburg
+      </address>
+      <a href="mailto:info@sebauservice.de" class="footer-email">
+        info@sebauservice.de
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">Leistungen</p>
+      <ul>
+        {leistungen.map(l => (
+          <li><a href="/leistungen">{l}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">Unternehmen</p>
+      <ul>
+        <li><a href="/ueber-uns">Über uns</a></li>
+        <li><a href="/kontakt">Kontakt</a></li>
+        <li><a href="/impressum">Impressum</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <span>© {new Date().getFullYear()} SE Bauservice GmbH</span>
+      <a href="/impressum">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-primary);
+    color: rgba(255,255,255,0.7);
+    margin-top: auto;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    padding-top: 72px;
+    padding-bottom: 56px;
+  }
+
+  .footer-logo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  address {
+    font-style: normal;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .footer-email {
+    font-size: 0.9rem;
+    color: var(--color-accent);
+    transition: opacity 0.18s;
+  }
+  .footer-email:hover { opacity: 0.8; }
+
+  .footer-col-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 18px;
+  }
+
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col a {
+    font-size: 0.9rem;
+    transition: color 0.18s;
+  }
+  .footer-col a:hover { color: #fff; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 18px 0;
+  }
+  .footer-bottom .container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+  }
+  .footer-bottom a:hover { color: rgba(255,255,255,0.7); }
+
+  @media (max-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding-top: 48px;
+      padding-bottom: 40px;
+    }
+  }
+</style>
