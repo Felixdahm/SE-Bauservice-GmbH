@@ -6,7 +6,7 @@ const leistungen = ['Trockenbau', 'Akustikbau', 'Abbrucharbeiten'];
   <div class="container footer-inner">
 
     <div class="footer-brand">
-      <p class="footer-logo">SE Bauservice GmbH</p>
+      <img src="/Logo-mitschrift.png" alt="SE Bauservice GmbH" class="footer-logo-img" />
       <address>
         Kreuzweg 10<br />
         20099 Hamburg
@@ -59,12 +59,11 @@ const leistungen = ['Trockenbau', 'Akustikbau', 'Abbrucharbeiten'];
     padding-bottom: 56px;
   }
 
-  .footer-logo {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #fff;
+  .footer-logo-img {
+    height: 56px;
+    width: auto;
+    object-fit: contain;
     margin-bottom: 16px;
-    letter-spacing: -0.02em;
   }
 
   address {

@@ -25,7 +25,7 @@ const currentPath = Astro.url.pathname;
   <!-- Hauptnavigation -->
   <div class="container header-inner">
     <a href="/" class="logo" aria-label="SE Bauservice GmbH – Startseite">
-      SE Bauservice GmbH
+      <img src="/Logo-mitschrift.png" alt="SE Bauservice GmbH" class="logo-img" />
     </a>
 
     <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">
@@ -100,12 +100,15 @@ const currentPath = Astro.url.pathname;
   }
 
   .logo {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
   }
 
   .nav {
