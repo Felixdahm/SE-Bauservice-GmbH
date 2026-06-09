@@ -1,7 +1,434 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaHome from '../components/CtaHome.astro';
+import PageHero from '../components/PageHero.astro';
+
+const timeline = [
+  {
+    label: 'Schritt 1',
+    title: 'Erstgespräch & Besichtigung',
+    text: 'Wir schauen uns das Projekt vor Ort an, bevor wir ein Angebot schreiben. Keine Ferndiagnose — erst sehen, dann rechnen.',
+  },
+  {
+    label: 'Qualität',
+    title: 'Eigenleistung',
+    text: 'Kein Weitervergeben. Jede Baustelle wird von unserem eigenen Team bearbeitet — von Anfang bis zur Übergabe.',
+  },
+  {
+    label: 'Schritt 2',
+    title: 'Klares Angebot',
+    text: 'Was wir aufschreiben, wird berechnet. Keine Positionen die später aufgestockt werden. Wenn sich etwas ändert, sagen wir das rechtzeitig.',
+  },
+  {
+    label: 'Qualität',
+    title: 'Termintreue',
+    text: 'Wir planen realistisch und halten uns daran. Ein vereinbarter Termin ist eine Zusage — kein ungefährer Richtwert.',
+  },
+  {
+    label: 'Schritt 3',
+    title: 'Saubere Ausführung',
+    text: 'Sauber bedeutet bei uns beides: handwerklich korrekt und ordentlich auf der Baustelle. Schutzmaßnahmen, Aufräumen, keine Schäden am Bestand.',
+  },
+  {
+    label: 'Schritt 4',
+    title: 'Ordentliche Übergabe',
+    text: 'Fertig heißt fertig. Keine offenen Punkte, kein Nachbessern nach Wochen. Wir übergeben erst, wenn alles sitzt.',
+  },
+]
 ---
 
-<BaseLayout title="Über uns" description="Lernen Sie die SE Bauservice GmbH kennen – Ihr zuverlässiger Partner für Trockenbau in Hamburg.">
-  <!-- Inhalt folgt -->
+<BaseLayout title="Über uns" description="SE Bauservice GmbH – Trockenbau, Akustikbau und Abbrucharbeiten in Hamburg. Wer wir sind und wie wir arbeiten.">
+
+  <PageHero
+    eyebrow="Wer wir sind"
+    heading="Wir bauen.<br />Selbst."
+    lead="SE Bauservice GmbH — Trockenbau, Akustikbau und Abbrucharbeiten in Hamburg. Kein Weitervergeben, kein Umweg."
+    backgroundImage="[BILD: Über-uns Hero-Hintergrund]"
+  />
+
+  <!-- Wer wir sind -->
+  <section class="wer-wir-sind">
+    <div class="container">
+      <div class="inner">
+        <div class="text-col">
+          <p class="eyebrow">Über uns</p>
+          <h2>Ein Handwerksbetrieb, der liefert was er verspricht.</h2>
+          <p>
+            Die SE Bauservice GmbH ist ein Hamburger Handwerksbetrieb für Trockenbau,
+            Akustikbau und Abbrucharbeiten. Wir arbeiten für Privatkunden die umbauen,
+            für Gewerbebetriebe die umstrukturieren, und für alle, die jemanden brauchen
+            der das einfach erledigt — ohne dass man dreimal nachfragen muss.
+          </p>
+          <p>
+            Was uns von vielen anderen unterscheidet: Wir vergeben nichts an Subunternehmer.
+            Unsere Mitarbeiter kennen die Baustelle, kennen das Projekt und sind
+            verantwortlich für das Ergebnis. Das merkt man — in der Ausführung
+            und in der Kommunikation.
+          </p>
+          <p>
+            Wir sind in Hamburg und Umgebung tätig. Kurze Anfahrtswege bedeuten
+            schnelle Reaktionszeiten und keine Aufschläge für Mobilität.
+          </p>
+        </div>
+        <div class="image-col">
+          <div class="image-placeholder">
+            <span>[BILD: Baustelle / Team bei der Arbeit]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="timeline-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Wie wir arbeiten</p>
+        <h2>Was Sie von uns erwarten können.</h2>
+      </div>
+      <div class="timeline">
+        <!-- Linie mit Scroll-Fill -->
+        <div class="tl-line">
+          <div class="tl-line-fill"></div>
+        </div>
+
+        {timeline.map((item, i) => (
+          <div class:list={['tl-item', i % 2 === 0 ? 'tl-left' : 'tl-right']}>
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-label">{item.label}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaHome />
+
 </BaseLayout>
+
+<script>
+  const timeline = document.querySelector('.timeline') as HTMLElement;
+  const lineFill = document.querySelector('.tl-line-fill') as HTMLElement;
+  const items    = document.querySelectorAll<HTMLElement>('.tl-item');
+  const dots     = document.querySelectorAll<HTMLElement>('.tl-dot');
+
+  if (timeline && lineFill && dots.length) {
+    // Dot-Positionen relativ zur Timeline einmalig beim Load berechnen
+    const timelineAbsTop = timeline.getBoundingClientRect().top + window.scrollY;
+    const dotOffsets = Array.from(dots).map(dot =>
+      dot.getBoundingClientRect().top + window.scrollY - timelineAbsTop
+    );
+
+    let ticking = false;
+
+    function update() {
+      const rect  = timeline.getBoundingClientRect();
+      const vh    = window.innerHeight;
+
+      // Füllhöhe in Pixel: Linie startet wenn Timeline-Mitte den Viewport-Mittelpunkt erreicht
+      const fillPx = Math.max(0, -rect.top + vh * 0.55);
+      const fillPct = Math.min(100, (fillPx / rect.height) * 100);
+      lineFill.style.height = `${fillPct}%`;
+
+      // Punkt aktiviert sich exakt wenn die Linie ihn erreicht
+      dotOffsets.forEach((offset, i) => {
+        const active = fillPx >= offset;
+        dots[i].classList.toggle('is-active', active);
+        items[i]?.classList.toggle('is-active', active);
+      });
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();
+  }
+</script>
+
+<style>
+  /* ── Hero ── */
+  .page-hero {
+    position: relative;
+    padding: 9rem 0 7rem;
+    background-color: var(--color-primary);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(26, 39, 51, 0.88) 40%,
+      rgba(26, 39, 51, 0.55)
+    );
+  }
+
+  .page-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .page-hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1.25rem;
+  }
+
+  .page-hero .lead {
+    font-size: 1.125rem;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.75;
+    max-width: 38rem;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  /* ── Wer wir sind ── */
+  .wer-wir-sind {
+    padding: 7rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .text-col .eyebrow {
+    margin-bottom: 1rem;
+  }
+
+  .text-col h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-heading);
+    margin-bottom: 1.75rem;
+  }
+
+  .text-col p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    margin-bottom: 1.25rem;
+  }
+
+  .text-col p:last-child {
+    margin-bottom: 0;
+  }
+
+  .image-col {
+    border-radius: 1.5rem;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-placeholder span {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* ── Timeline ── */
+  .timeline-section {
+    padding: 7rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 5rem;
+  }
+
+  .section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-heading);
+    margin-top: 1rem;
+    max-width: 32rem;
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    position: relative;
+    padding: 1rem 0 2rem;
+  }
+
+  /* Hintergrund-Linie (grau) */
+  .tl-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-border);
+    transform: translateX(-50%);
+    overflow: hidden;
+  }
+
+  /* Füll-Linie (Akzentfarbe, wächst beim Scrollen) */
+  .tl-line-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0%;
+    background: var(--color-accent);
+    will-change: height;
+  }
+
+  /* Einzelner Eintrag */
+  .tl-item {
+    position: relative;
+    display: flex;
+    margin-bottom: 8rem;
+  }
+
+  .tl-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Dot — echtes DOM-Element */
+  .tl-dot {
+    position: absolute;
+    left: calc(50% - 10px);
+    top: 0.5rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-border);
+    border: 3px solid var(--color-bg);
+    outline: 2px solid var(--color-border);
+    z-index: 2;
+    transition: background 0.3s, outline-color 0.3s;
+  }
+
+  .tl-dot.is-active {
+    background: var(--color-accent);
+    outline-color: var(--color-accent);
+  }
+
+  /* Links */
+  .tl-left {
+    justify-content: flex-end;
+    padding-right: calc(50% + 5rem);
+  }
+
+  /* Rechts */
+  .tl-right {
+    justify-content: flex-start;
+    padding-left: calc(50% + 5rem);
+  }
+
+  .tl-content {
+    max-width: 460px;
+    width: 100%;
+  }
+
+  .tl-left .tl-content {
+    text-align: right;
+  }
+
+  .tl-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+    transition: color 0.3s;
+  }
+
+  .tl-item.is-active .tl-label {
+    color: var(--color-accent);
+  }
+
+  .tl-content h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin-bottom: 0.875rem;
+    line-height: 1.25;
+  }
+
+  .tl-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .page-hero h1 { font-size: 2.75rem; }
+
+    .wer-wir-sind { padding: 4rem 0; }
+    .arbeitsweise  { padding: 4rem 0; }
+
+    .inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .text-col h2 { font-size: 1.75rem; }
+
+    .section-header h2 { font-size: 1.75rem; }
+    .page-hero h1      { font-size: 2.25rem; }
+
+    .tl-line { display: none; }
+
+    .tl-item {
+      padding: 0 !important;
+      justify-content: flex-start !important;
+      margin-bottom: 2.5rem;
+      padding-left: 1.75rem !important;
+      border-left: 2px solid var(--color-border);
+    }
+
+    .tl-dot {
+      left: -7px;
+    }
+
+    .tl-left .tl-content {
+      text-align: left;
+    }
+  }
+</style>

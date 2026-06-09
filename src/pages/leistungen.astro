@@ -1,7 +1,279 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaHome from '../components/CtaHome.astro';
+import PageHero from '../components/PageHero.astro';
+
+const services = [
+  {
+    id: 'trockenbau',
+    eyebrow: 'Trockenbau',
+    heading: 'Wände, Decken und Systemböden — sauber ausgeführt.',
+    text: 'Ob neue Raumaufteilung, abgehängte Decke oder Installationswand — wir übernehmen Trockenbauprojekte jeder Größe. Für Privatkunden im Umbau genauso wie für Gewerbebetriebe im laufenden Betrieb.',
+    bullets: [
+      'Trennwände und Raumaufteilungen',
+      'Abgehängte Decken',
+      'Installationswände und Vorwandmontagen',
+      'Systemböden und Doppelböden',
+      'Beplankung und Verkleidungen',
+    ],
+    imagePlaceholder: 'Trockenbau-Baustelle',
+    imageRight: false,
+  },
+  {
+    id: 'akustikbau',
+    eyebrow: 'Akustikbau',
+    heading: 'Schallschutz, der wirklich funktioniert.',
+    text: 'Lärm zwischen Räumen, von oben oder aus Technikbereichen — wir kennen die Ursachen und bauen Lösungen, die halten. Kein Rätselraten, sondern handwerklich korrekt ausgeführter Schallschutz.',
+    bullets: [
+      'Schallschutzwände nach DIN-Anforderungen',
+      'Schallentkoppelte Ständerwerkkonstruktionen',
+      'Akustikdecken und Unterdecken',
+      'Trittschallschutz und Bodenaufbauten',
+      'Schallschutztüren und Zargen',
+    ],
+    imagePlaceholder: 'Akustikbau Schallschutzwand',
+    imageRight: true,
+  },
+  {
+    id: 'abbruch',
+    eyebrow: 'Abbrucharbeiten',
+    heading: 'Kontrollierter Abbruch — ohne Überraschungen.',
+    text: 'Wände raus, Decken runter, Estrich weg. Wir führen Abbrucharbeiten aller Art kontrolliert und sauber aus — mit vollständiger Entsorgung. Sie bekommen eine freie Fläche, keine Baustelle.',
+    bullets: [
+      'Abbruch von Trockenbau- und Mauerwerk',
+      'Decken- und Estrichabbruch',
+      'Kernbohrungen und Wanddurchbrüche',
+      'Schadstoffarmer Rückbau',
+      'Entsorgung inklusive',
+    ],
+    imagePlaceholder: 'Abbrucharbeiten Baustelle',
+    imageRight: false,
+  },
+]
 ---
 
 <BaseLayout title="Leistungen" description="Trockenbau, Akustikbau und Abbrucharbeiten – SE Bauservice GmbH aus Hamburg.">
-  <!-- Inhalt folgt -->
+
+  <PageHero
+    eyebrow="Was wir machen"
+    heading="Unsere Leistungen"
+    lead="Trockenbau, Akustikbau und Abbrucharbeiten aller Art — in Hamburg und Umgebung, für Privat- und Gewerbekunden."
+    backgroundImage="[BILD: Hero-Hintergrund Leistungsseite]"
+  />
+
+  <!-- Leistungs-Abschnitte -->
+  {services.map((s) => (
+    <section class="service-block" id={s.id}>
+      <div class="container">
+        <div class:list={['inner', { 'inner--reverse': s.imageRight }]}>
+
+          <!-- Bild -->
+          <div class="service-image">
+            <div class="image-placeholder">
+              <span>[BILD: {s.imagePlaceholder}]</span>
+            </div>
+          </div>
+
+          <!-- Text -->
+          <div class="service-text">
+            <p class="eyebrow">{s.eyebrow}</p>
+            <h2>{s.heading}</h2>
+            <p class="desc">{s.text}</p>
+            <ul class="bullets">
+              {s.bullets.map(b => (
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  {b}
+                </li>
+              ))}
+            </ul>
+            <a href="/kontakt" class="btn btn-primary">Jetzt anfragen</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CtaHome />
+
 </BaseLayout>
+
+<style>
+  /* ── Page Hero ── */
+  .page-hero {
+    position: relative;
+    padding: 9rem 0 7rem;
+    background-color: var(--color-primary);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(26, 39, 51, 0.85) 40%,
+      rgba(26, 39, 51, 0.5)
+    );
+  }
+
+  .page-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-hero .eyebrow {
+    color: var(--color-accent);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .page-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1.25rem;
+  }
+
+  .page-hero .lead {
+    font-size: 1.125rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.75;
+    max-width: 42rem;
+  }
+
+  /* ── Service Blocks ── */
+  .service-block {
+    padding: 7rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .service-block:last-of-type {
+    border-bottom: none;
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .inner--reverse .service-image {
+    order: 2;
+  }
+  .inner--reverse .service-text {
+    order: 1;
+  }
+
+  /* ── Bild ── */
+  .service-image {
+    border-radius: 1.5rem;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-placeholder span {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* ── Text ── */
+  .service-text .eyebrow {
+    color: var(--color-accent);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .service-text h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-heading);
+    margin-bottom: 1.25rem;
+  }
+
+  .desc {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--color-text);
+    margin-bottom: 2rem;
+  }
+
+  /* ── Bullets ── */
+  .bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .bullets li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .bullets li svg {
+    flex-shrink: 0;
+    color: var(--color-accent);
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .page-hero {
+      padding: 4rem 0 3rem;
+    }
+
+    .page-hero h1 {
+      font-size: 2.2rem;
+    }
+
+    .service-block {
+      padding: 4rem 0;
+    }
+
+    .inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .inner--reverse .service-image,
+    .inner--reverse .service-text {
+      order: unset;
+    }
+
+    .service-text h2 {
+      font-size: 1.75rem;
+    }
+  }
+</style>

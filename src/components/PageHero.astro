@@ -1,0 +1,88 @@
+---
+interface Props {
+  eyebrow: string;
+  heading: string;
+  lead?: string;
+  backgroundImage?: string;
+}
+
+const { eyebrow, heading, lead, backgroundImage } = Astro.props;
+---
+
+<section
+  class="page-hero"
+  style={backgroundImage ? `background-image: url('${backgroundImage}')` : ''}
+>
+  {backgroundImage && <div class="hero-overlay"></div>}
+  <div class="container">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 set:html={heading} />
+    {lead && <p class="lead">{lead}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    padding: 9rem 0 7rem;
+    background-color: var(--color-primary);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(26, 39, 51, 0.88) 40%,
+      rgba(26, 39, 51, 0.55)
+    );
+  }
+
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 5%;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1.25rem;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.75;
+    max-width: 42rem;
+  }
+
+  @media (max-width: 900px) {
+    .page-hero {
+      padding: 5rem 0 4rem;
+      min-height: 280px;
+    }
+
+    h1 { font-size: 2.25rem; }
+  }
+</style>

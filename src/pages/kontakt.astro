@@ -1,7 +1,300 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
 <BaseLayout title="Kontakt" description="Nehmen Sie Kontakt zur SE Bauservice GmbH auf – wir freuen uns auf Ihre Anfrage.">
-  <!-- Inhalt folgt -->
+
+  <PageHero
+    eyebrow="Kontakt"
+    heading="Projekt besprechen.<br />Angebot anfragen."
+    lead="Kurze Beschreibung reicht — wir melden uns zeitnah zurück."
+  />
+
+  <!-- Kontakt-Inhalt -->
+  <section class="kontakt-section">
+    <div class="container">
+      <div class="inner">
+
+        <!-- Linke Seite: Infos -->
+        <div class="info-col">
+          <h2>So erreichen Sie uns</h2>
+
+          <div class="contact-items">
+            <div class="contact-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <p class="contact-label">Adresse</p>
+                <p>Kreuzweg 10<br />20099 Hamburg</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <div>
+                <p class="contact-label">E-Mail</p>
+                <a href="mailto:info@sebauservice.de">info@sebauservice.de</a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="response-note">
+            <p>Wir antworten in der Regel innerhalb eines Werktages.</p>
+          </div>
+        </div>
+
+        <!-- Rechte Seite: Formular -->
+        <div class="form-col">
+          <form class="kontakt-form" name="kontakt" method="POST" data-netlify="true" action="/kontakt#erfolg">
+            <input type="hidden" name="form-name" value="kontakt" />
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" placeholder="Ihr Name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">E-Mail *</label>
+                <input type="email" id="email" name="email" placeholder="ihre@email.de" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="telefon">Telefon</label>
+              <input type="tel" id="telefon" name="telefon" placeholder="+49 40 ..." />
+            </div>
+
+            <div class="form-group">
+              <label for="leistung">Leistung</label>
+              <select id="leistung" name="leistung">
+                <option value="" disabled selected>Bitte wählen</option>
+                <option value="trockenbau">Trockenbau</option>
+                <option value="akustikbau">Akustikbau</option>
+                <option value="abbruch">Abbrucharbeiten</option>
+                <option value="sonstiges">Sonstiges</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="nachricht">Nachricht *</label>
+              <textarea id="nachricht" name="nachricht" rows="5" placeholder="Kurze Beschreibung Ihres Projekts..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Anfrage absenden</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<style>
+  /* ── Hero ── */
+  .page-hero {
+    padding: 6rem 0 5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .page-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-heading);
+    margin-bottom: 1.25rem;
+  }
+
+  .page-hero .lead {
+    font-size: 1.125rem;
+    color: var(--color-text);
+    line-height: 1.75;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  /* ── Layout ── */
+  .kontakt-section {
+    padding: 7rem 0;
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 7rem;
+    align-items: start;
+  }
+
+  /* ── Info Spalte ── */
+  .info-col h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .contact-item svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--color-accent);
+  }
+
+  .contact-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .contact-item p,
+  .contact-item a {
+    font-size: 1rem;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  .contact-item a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: opacity 0.18s;
+  }
+
+  .contact-item a:hover { opacity: 0.75; }
+
+  .placeholder-text {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .response-note {
+    padding: 1.25rem 1.5rem;
+    background: var(--color-bg-light);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .response-note p {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    line-height: 1.65;
+  }
+
+  /* ── Formular ── */
+  .kontakt-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    color: var(--color-heading);
+    background: var(--color-bg);
+    transition: border-color 0.18s;
+    width: 100%;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .btn-full {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .page-hero { padding: 4rem 0 3rem; }
+    .page-hero h1 { font-size: 2.25rem; }
+    .kontakt-section { padding: 4rem 0; }
+
+    .inner {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

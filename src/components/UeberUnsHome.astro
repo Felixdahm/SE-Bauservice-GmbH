@@ -1,0 +1,198 @@
+---
+---
+
+<section class="ueber-uns-home">
+  <div class="container">
+    <div class="bento-grid">
+
+      <!-- Kachel 1: Intro-Text (groß, dunkel) -->
+      <div class="bento-item is-intro">
+        <p class="bento-label">SE Bauservice GmbH</p>
+        <h2>Ihr Betrieb für Trockenbau, Akustik und Abbruch in Hamburg.</h2>
+        <p class="bento-text">
+          Wir arbeiten selbst — kein Weitervergeben, keine Überraschungen auf der Rechnung.
+          Saubere Ausführung, verlässliche Termine und ein direkter Ansprechpartner
+          vom ersten Gespräch bis zur fertigen Baustelle.
+        </p>
+      </div>
+
+      <!-- Kachel 2: CTA -->
+      <div class="bento-item is-cta">
+        <h3>Mehr über uns</h3>
+        <p>Erfahren Sie wie wir arbeiten und was uns ausmacht.</p>
+        <a href="/ueber-uns" class="bento-link">
+          Über uns lesen
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- Kachel 3–5: Qualitäts-Aussagen -->
+      <div class="bento-item is-stat">
+        <span class="stat-value">Eigenleistung</span>
+        <span class="stat-label">Kein Weitervergeben — wir arbeiten selbst auf der Baustelle.</span>
+      </div>
+
+      <div class="bento-item is-stat">
+        <span class="stat-value">Kostentransparenz</span>
+        <span class="stat-label">Klare Angebote ohne versteckte Posten.</span>
+      </div>
+
+      <div class="bento-item is-stat">
+        <span class="stat-value">Hamburg & Umgebung</span>
+        <span class="stat-label">Schnell vor Ort, ohne lange Wartezeiten.</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .ueber-uns-home {
+    padding: 7rem 0;
+  }
+
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  /* ── Bento-Grid ── */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .is-intro { grid-column: 1 / 3; }
+  .is-cta   { grid-column: 3 / 4; }
+  .is-stat  { grid-column: span 1; }
+
+  /* ── Kachel-Basis ── */
+  .bento-item {
+    border-radius: 1.5rem;
+    padding: 3rem;
+    background: var(--color-primary);
+    color: var(--color-on-dark);
+  }
+
+  /* ── Intro ── */
+  .bento-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .is-intro h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .bento-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* ── Stat ── */
+  .is-stat {
+    background: var(--color-primary-mid);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    min-height: 160px;
+  }
+
+  .is-stat::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 3px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    margin-bottom: 1.25rem;
+  }
+
+  .stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.4;
+  }
+
+  /* ── CTA ── */
+  .is-cta {
+    background: var(--color-accent);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .is-cta h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .is-cta p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 2rem;
+  }
+
+  .bento-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.35);
+    padding-bottom: 3px;
+    width: fit-content;
+    transition: border-color 0.2s;
+  }
+
+  .bento-link:hover {
+    border-color: #fff;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .ueber-uns-home {
+      padding-top: 4rem;
+      margin-bottom: -3rem;
+    }
+
+    .bento-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .is-intro { grid-column: 1 / -1; }
+    .is-cta   { grid-column: 1 / -1; }
+    .is-stat  { grid-column: span 1; }
+
+    .is-intro h2 { font-size: 1.5rem; }
+    .stat-value  { font-size: 2.5rem; }
+    .bento-item  { padding: 2rem; }
+  }
+</style>

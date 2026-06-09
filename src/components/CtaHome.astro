@@ -1,0 +1,106 @@
+---
+---
+
+<section class="cta-home">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Projekt in Planung?<br />Sprechen Sie uns an.</h2>
+        <p>Kostenloses Erstgespräch, schnelle Rückmeldung — kein langes Hin und Her.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="/kontakt" class="btn btn-primary">Jetzt anfragen</a>
+        <a href="mailto:info@sebauservice.de" class="cta-mail">info@sebauservice.de</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-home {
+    position: relative;
+    z-index: 2;
+    margin-bottom: -10rem;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  .cta-inner {
+    background: var(--color-accent);
+    border-radius: 1.5rem;
+    padding: 4rem 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-text p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .btn-primary {
+    background: #fff;
+    color: var(--color-accent);
+    border-color: #fff;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover {
+    background: rgba(255,255,255,0.9);
+  }
+
+  .cta-mail {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+
+  .cta-mail:hover {
+    color: #fff;
+  }
+
+  @media (max-width: 900px) {
+    .cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 2.5rem;
+      gap: 2rem;
+    }
+
+    .cta-actions {
+      align-items: flex-start;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    .margin-bottom {
+      margin-bottom: -3rem;
+    }
+  }
+</style>
