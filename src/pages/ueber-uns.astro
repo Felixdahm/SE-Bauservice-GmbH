@@ -398,37 +398,83 @@ const timeline = [
 
   /* ── Mobile ── */
   @media (max-width: 900px) {
-    .page-hero h1 { font-size: 2.75rem; }
-
-    .wer-wir-sind { padding: 4rem 0; }
-    .arbeitsweise  { padding: 4rem 0; }
+    /* Wer wir sind */
+    .wer-wir-sind {
+      padding: 3.5rem 0;
+    }
 
     .inner {
       grid-template-columns: 1fr;
-      gap: 2.5rem;
+      gap: 2rem;
     }
 
-    .text-col h2 { font-size: 1.75rem; }
+    .text-col h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1.25rem;
+    }
 
-    .section-header h2 { font-size: 1.75rem; }
-    .page-hero h1      { font-size: 2.25rem; }
+    .text-col p {
+      font-size: 1rem;
+    }
 
-    .tl-line { display: none; }
+    .image-col {
+      aspect-ratio: 16 / 9;
+    }
 
-    .tl-item {
-      padding: 0 !important;
-      justify-content: flex-start !important;
-      margin-bottom: 2.5rem;
-      padding-left: 1.75rem !important;
+    /* Timeline */
+    .timeline-section {
+      padding: 3.5rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.6rem;
+    }
+
+    .timeline {
+      padding-left: 1.5rem;
+    }
+
+    /* Mittellinie ausblenden, linke Border als Linie */
+    .tl-line {
+      display: none;
+    }
+
+    .timeline {
       border-left: 2px solid var(--color-border);
     }
 
+    .tl-item {
+      padding: 0 0 0 2rem !important;
+      justify-content: flex-start !important;
+      margin-bottom: 3rem;
+    }
+
+    .tl-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Dot linksbündig zur Border */
     .tl-dot {
-      left: -7px;
+      left: -1.075rem;
+      top: 0.45rem;
+      width: 14px;
+      height: 14px;
     }
 
     .tl-left .tl-content {
       text-align: left;
+    }
+
+    .tl-content h3 {
+      font-size: 1.3rem;
+    }
+
+    .tl-content p {
+      font-size: 1rem;
     }
   }
 </style>

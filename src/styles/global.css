@@ -134,3 +134,30 @@ p { line-height: 1.7; }
   background: rgba(255,255,255,0.12);
   border-color: #fff;
 }
+
+/* ─── Mobile: alles zentriert ───────────────────────────────────────── */
+@media (max-width: 900px) {
+  /* Überschriften, Texte, Labels zentrieren */
+  h1, h2, h3, h4, p, .eyebrow, .section-label,
+  .bento-label, .tl-label, .contact-label {
+    text-align: center;
+  }
+
+  /* Button-Gruppen zentrieren */
+  .hero-actions, .block-actions, .cta-actions,
+  .button-group, .btn-group {
+    justify-content: center;
+  }
+
+  /* Ausnahmen: Formular, Timeline-Einträge, Footer, Bento-Cards */
+  label, input, textarea, select,
+  .footer-inner, .footer-col, .footer-brand,
+  .footer-bottom,
+  .tl-content p, .tl-content h3,
+  .bento-item p, .bento-item h2, .bento-item h3,
+  .wert-item p,
+  .contact-item p, .contact-item a,
+  .response-note p {
+    text-align: left;
+  }
+}
