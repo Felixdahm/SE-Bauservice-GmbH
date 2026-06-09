@@ -438,17 +438,21 @@ const timeline = [
       padding-left: 1.5rem;
     }
 
-    /* Mittellinie ausblenden, linke Border als Linie */
-    .tl-line {
-      display: none;
+    /* Mobile Timeline: linke Seite, echte Linie mit Animation */
+    .timeline {
+      padding-left: 30px;
+      border-left: none;
     }
 
-    .timeline {
-      border-left: 2px solid var(--color-border);
+    /* Linie links zeigen (nicht ausblenden) */
+    .tl-line {
+      display: block;
+      left: 8px;         /* Linienmitte bei ~9px */
+      transform: none;
     }
 
     .tl-item {
-      padding: 0 0 0 2rem !important;
+      padding: 0 !important;
       justify-content: flex-start !important;
       margin-bottom: 3rem;
     }
@@ -457,10 +461,10 @@ const timeline = [
       margin-bottom: 0;
     }
 
-    /* Dot linksbündig zur Border */
+    /* Dot genau auf der Linie zentrieren */
     .tl-dot {
-      left: -1.075rem;
-      top: 0.45rem;
+      left: -28px;       /* = -(30px padding - 2px) → Mitte bei 9px */
+      top: 0.35rem;
       width: 14px;
       height: 14px;
     }

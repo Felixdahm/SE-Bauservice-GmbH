@@ -250,21 +250,17 @@ const services = [
 
   /* ── Mobile ── */
   @media (max-width: 900px) {
-    .page-hero {
-      padding: 4rem 0 3rem;
-    }
-
-    .page-hero h1 {
-      font-size: 2.2rem;
-    }
-
     .service-block {
-      padding: 4rem 0;
+      padding: 3rem 0;
+    }
+
+    .service-block:first-of-type {
+      padding-top: 2.5rem;
     }
 
     .inner {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.75rem;
     }
 
     .inner--reverse .service-image,
@@ -272,8 +268,42 @@ const services = [
       order: unset;
     }
 
+    /* Text zentrieren */
+    .service-text {
+      text-align: center;
+    }
+
     .service-text h2 {
-      font-size: 1.75rem;
+      font-size: 1.6rem;
+    }
+
+    .desc {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Bullets links lassen, aber zentriert im Container */
+    .bullets {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      margin-bottom: 1.75rem;
+    }
+
+    .bullets li {
+      align-items: flex-start;
+      font-size: 0.95rem;
+    }
+
+    /* Button zentrieren */
+    .block-actions {
+      justify-content: center;
+    }
+
+    /* Bild aspect-ratio kompakter */
+    .service-image {
+      aspect-ratio: 16 / 9;
     }
   }
 </style>
