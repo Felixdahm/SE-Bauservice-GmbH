@@ -6,7 +6,10 @@ const leistungen = ['Trockenbau', 'Akustikbau', 'Abbrucharbeiten'];
   <div class="container footer-inner">
 
     <div class="footer-brand">
-      <img src="/Logo-mitschrift.png" alt="SE Bauservice GmbH" class="footer-logo-img" />
+      <a href="/" class="footer-logo">
+        <img src="/Logo.png" alt="SE" class="footer-logo-img" />
+        <span class="footer-logo-sub">Bauservice GmbH</span>
+      </a>
       <address>
         Kreuzweg 10<br />
         20099 Hamburg
@@ -59,11 +62,30 @@ const leistungen = ['Trockenbau', 'Akustikbau', 'Abbrucharbeiten'];
     padding-bottom: 56px;
   }
 
-  .footer-logo-img {
-    height: 56px;
-    width: auto;
-    object-fit: contain;
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0;
     margin-bottom: 16px;
+    text-decoration: none;
+  }
+
+  .footer-logo-img {
+    height: 44px;
+    width: auto;
+    display: block;
+    margin-right: 0.5rem;
+    border-radius: 6px;
+    padding: 4px 8px;
+    background: #fff;
+  }
+
+  .footer-logo-sub {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: rgba(255,255,255,0.85);
+    white-space: nowrap;
   }
 
   address {
