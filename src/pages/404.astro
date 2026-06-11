@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Seite nicht gefunden" description="Diese Seite gibt es nicht – zurück zur Startseite der SE Bauservice GmbH.">
+
+  <section class="not-found">
+    <div class="container">
+      <p class="eyebrow">Fehler 404</p>
+      <h1>Diese Seite gibt es nicht.</h1>
+      <p class="lead">
+        Die Adresse ist veraltet oder vertippt — so wie eine Wand, die im Plan steht,
+        aber nie gebaut wurde. Hier geht es zurück:
+      </p>
+      <div class="actions">
+        <a href="/" class="btn btn-primary">Zur Startseite</a>
+        <a href="/kontakt" class="btn btn-outline-dark">Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding: 9rem 0 10rem;
+  }
+
+  .container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  .eyebrow {
+    color: var(--color-accent);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--color-text);
+    max-width: 36rem;
+    margin-bottom: 2rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .not-found {
+      padding: 4rem 0 5rem;
+    }
+
+    h1 { font-size: 2rem; }
+
+    .lead { font-size: 1rem; }
+
+    .actions {
+      justify-content: center;
+    }
+  }
+</style>
