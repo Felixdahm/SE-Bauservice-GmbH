@@ -43,7 +43,6 @@ const timeline = [
     eyebrow="Wer wir sind"
     heading="Wir bauen.<br />Selbst."
     lead="SE Bauservice GmbH — Trockenbau, Akustikbau und Abbrucharbeiten in Hamburg. Kein Weitervergeben, kein Umweg."
-    backgroundImage="[BILD: Über-uns Hero-Hintergrund]"
   />
 
   <!-- Wer wir sind -->
@@ -71,9 +70,7 @@ const timeline = [
           </p>
         </div>
         <div class="image-col">
-          <div class="image-placeholder">
-            <span>[BILD: Baustelle / Team bei der Arbeit]</span>
-          </div>
+          <img src="/img.png" alt="SE Bauservice GmbH" class="logo-img" />
         </div>
       </div>
     </div>
@@ -251,21 +248,12 @@ const timeline = [
   .image-col {
     border-radius: 1.5rem;
     overflow: hidden;
-    aspect-ratio: 4 / 3;
   }
 
-  .image-placeholder {
+  .logo-img {
     width: 100%;
-    height: 100%;
-    background: var(--color-bg-muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .image-placeholder span {
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
+    height: auto;
+    display: block;
   }
 
   /* ── Timeline ── */
