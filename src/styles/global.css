@@ -137,9 +137,10 @@ p { line-height: 1.7; }
 
 /* ─── Mobile: alles zentriert ───────────────────────────────────────── */
 @media (max-width: 900px) {
-  /* Überschriften, Texte, Labels zentrieren */
+  /* Überschriften, Texte, Labels zentrieren
+     (.tl-label bewusst nicht: Timeline-Einträge sind komplett linksbündig) */
   h1, h2, h3, h4, p, .eyebrow, .section-label,
-  .bento-label, .tl-label, .contact-label {
+  .bento-label, .contact-label {
     text-align: center;
   }
 

@@ -104,6 +104,7 @@ const services = [
   .service-block {
     padding: 7rem 0;
     border-bottom: 1px solid var(--color-border);
+    scroll-margin-top: 90px; /* sticky Header verdeckt sonst die Abschnitts-Überschrift bei Anchor-Links */
   }
 
   .service-block:last-of-type {
@@ -196,6 +197,7 @@ const services = [
   @media (max-width: 900px) {
     .service-block {
       padding: 3rem 0;
+      scroll-margin-top: 68px;
     }
 
     .service-block:first-of-type {

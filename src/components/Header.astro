@@ -33,6 +33,7 @@ const currentPath = Astro.url.pathname;
           </li>
         ))}
       </ul>
+      <a href="/kontakt" class="btn btn-primary nav-cta">Jetzt anfragen</a>
     </nav>
 
     <a href="/kontakt" class="btn btn-primary header-cta">Jetzt anfragen</a>
@@ -42,10 +43,26 @@ const currentPath = Astro.url.pathname;
 <script>
   const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
   const nav = document.querySelector('.nav') as HTMLElement;
-  toggle?.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!open));
-    nav.classList.toggle('nav--open');
+
+  function setOpen(open: boolean) {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    nav.classList.toggle('nav--open', open);
+  }
+
+  toggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  // Tipp außerhalb des Menüs oder Escape schließt es
+  document.addEventListener('click', (e) => {
+    if (nav.classList.contains('nav--open') && !nav.contains(e.target as Node)) {
+      setOpen(false);
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
   });
 </script>
 
@@ -126,11 +143,15 @@ const currentPath = Astro.url.pathname;
   .nav-toggle {
     display: none;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px; /* Icon optisch am Seitenrand ausrichten, Tap-Fläche bleibt 44px */
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
     justify-self: end;
     grid-column: 3;
   }
@@ -143,22 +164,48 @@ const currentPath = Astro.url.pathname;
     transition: transform 0.2s, opacity 0.2s;
   }
 
+  /* Hamburger → X im geöffneten Zustand */
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* CTA im Menü: nur mobil sichtbar */
+  .nav-cta {
+    display: none;
+  }
+
   @media (max-width: 768px) {
+    .header-inner {
+      height: 68px;
+    }
+
+    .logo-img {
+      height: 38px;
+    }
+
     .nav-toggle { display: flex; }
     .header-cta { display: none; }
 
     .nav {
       display: none;
       position: absolute;
-      top: 90px;
+      top: 100%;
       left: 0;
       right: 0;
+      justify-self: normal; /* hebt justify-self: center auf, sonst schrumpft das Panel auf Inhaltsbreite */
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       gap: 0;
       background: var(--color-primary);
       padding: 16px 24px 24px;
       border-top: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.25);
     }
     .nav.nav--open { display: flex; }
 
@@ -172,6 +219,12 @@ const currentPath = Astro.url.pathname;
       padding: 13px 0;
       font-size: 1rem;
       border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-cta {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
     }
   }
 </style>

@@ -136,11 +136,12 @@ const leistungen = ['Trockenbau', 'Akustikbau', 'Abbrucharbeiten'];
   }
   .footer-bottom a:hover { color: rgba(255,255,255,0.7); }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .footer-inner {
       grid-template-columns: 1fr;
       gap: 40px;
-      padding-top: 48px;
+      /* 3rem = Überlappung der CTA-Karte (margin-bottom: -3rem), 48px Luft darunter */
+      padding-top: calc(48px + 3rem);
       padding-bottom: 40px;
     }
   }
