@@ -1,6 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
+
+// Web3Forms Access-Key (öffentlich, gehört zur Empfänger-Adresse).
+// Key anfordern auf https://web3forms.com — kommt per Mail an die eingetragene Adresse.
+// TODO: Vor Go-Live gegen den Key für info@sebauservice.de tauschen.
+const WEB3FORMS_KEY = 'HIER_ACCESS_KEY_EINTRAGEN';
 ---
 
 <BaseLayout title="Kontakt" description="Nehmen Sie Kontakt zur SE Bauservice GmbH auf – wir freuen uns auf Ihre Anfrage.">
@@ -46,8 +51,12 @@ import PageHero from '../components/PageHero.astro';
 
         <!-- Rechte Seite: Formular -->
         <div class="form-col">
-          <form class="kontakt-form" name="kontakt" method="POST" data-netlify="true" action="/kontakt#erfolg">
-            <input type="hidden" name="form-name" value="kontakt" />
+          <form class="kontakt-form" name="kontakt" method="POST" action="https://api.web3forms.com/submit">
+            <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+            <input type="hidden" name="subject" value="Neue Anfrage über sebauservice.de" />
+            <input type="hidden" name="from_name" value="Webseite SE Bauservice" />
+            <!-- Honeypot gegen Spam-Bots: bleibt für Menschen unsichtbar und leer -->
+            <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" />
 
             <div class="form-row">
               <div class="form-group">
@@ -82,6 +91,14 @@ import PageHero from '../components/PageHero.astro';
             </div>
 
             <button type="submit" class="btn btn-primary btn-full">Anfrage absenden</button>
+
+            <p class="form-status form-status--ok" hidden>
+              Vielen Dank für Ihre Anfrage! Wir melden uns in der Regel innerhalb eines Werktages bei Ihnen.
+            </p>
+            <p class="form-status form-status--error" hidden>
+              Das hat leider nicht geklappt. Bitte versuchen Sie es noch einmal oder schreiben Sie uns direkt an
+              <a href="mailto:info@sebauservice.de">info@sebauservice.de</a>.
+            </p>
           </form>
         </div>
 
@@ -90,6 +107,42 @@ import PageHero from '../components/PageHero.astro';
   </section>
 
 </BaseLayout>
+
+<script>
+  const form = document.querySelector('.kontakt-form') as HTMLFormElement;
+  const okMsg = document.querySelector('.form-status--ok') as HTMLElement;
+  const errMsg = document.querySelector('.form-status--error') as HTMLElement;
+  const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    okMsg.hidden = true;
+    errMsg.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Wird gesendet …';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        form.reset();
+        okMsg.hidden = false;
+      } else {
+        errMsg.hidden = false;
+      }
+    } catch {
+      errMsg.hidden = false;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Anfrage absenden';
+    }
+  });
+</script>
 
 <style>
   /* ── Hero ── */
@@ -280,6 +333,45 @@ import PageHero from '../components/PageHero.astro';
     padding: 1rem;
     font-size: 1rem;
     margin-top: 0.5rem;
+  }
+
+  .btn-full:disabled {
+    opacity: 0.65;
+    cursor: default;
+  }
+
+  /* Honeypot unsichtbar, aber nicht display:none (Bots füllen sonst nicht aus) */
+  .botcheck {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .form-status {
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .form-status--ok {
+    background: #EDF7EE;
+    border-left: 3px solid #3E8E4B;
+    color: #2C5E36;
+  }
+
+  .form-status--error {
+    background: #FBEFEC;
+    border-left: 3px solid #C0492C;
+    color: #8A3520;
+  }
+
+  .form-status--error a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
   }
 
   /* ── Mobile ── */

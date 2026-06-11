@@ -9,6 +9,29 @@ interface Props {
 }
 
 const { title, description = 'SE Bauservice GmbH – Trockenbau, Akustikbau und Abbrucharbeiten in Hamburg.' } = Astro.props;
+
+const fullTitle = `${title} | SE Bauservice GmbH`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL('/og-bild.jpg', Astro.site);
+
+// Strukturierte Daten für die lokale Suche (Google "Handwerker in meiner Nähe")
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'GeneralContractor',
+  name: 'SE Bauservice GmbH',
+  description: 'Trockenbau, Akustikbau und Abbrucharbeiten in Hamburg und Umgebung.',
+  url: Astro.site?.toString(),
+  email: 'info@sebauservice.de',
+  image: ogImageUrl.toString(),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Kreuzweg 10',
+    postalCode: '20099',
+    addressLocality: 'Hamburg',
+    addressCountry: 'DE',
+  },
+  areaServed: 'Hamburg und Umgebung',
+};
 ---
 
 <!doctype html>
@@ -17,8 +40,29 @@ const { title, description = 'SE Bauservice GmbH – Trockenbau, Akustikbau und 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <title>{title} | SE Bauservice GmbH</title>
+    <title>{fullTitle}</title>
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph (WhatsApp, Facebook, LinkedIn …) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SE Bauservice GmbH" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
   </head>
   <body>
     <Header />
