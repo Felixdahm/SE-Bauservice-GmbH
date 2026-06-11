@@ -2,60 +2,151 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Impressum">
+<BaseLayout title="Impressum" description="Impressum der SE Bauservice GmbH, Hamburg.">
+  <div class="impressum-hero">
+    <div class="container">
+      <p class="eyebrow">Rechtliches</p>
+      <h1>Impressum</h1>
+    </div>
+  </div>
+
   <section class="impressum-section">
     <div class="container">
-      <h1>Impressum</h1>
 
-      <h2>Angaben gemäß § 5 TMG</h2>
-      <p>
-        SE Bauservice GmbH<br />
-        Kreuzweg 10<br />
-        20099 Hamburg<br />
-        Deutschland
-      </p>
+      <div class="block">
+        <h2>Angaben gemäß § 5 TMG</h2>
+        <p>
+          SE Bauservice GmbH<br />
+          Kreuzweg 10<br />
+          20099 Hamburg<br />
+          Deutschland
+        </p>
+      </div>
 
-      <h2>Vertreten durch</h2>
-      <p>Shabnam Hassin (Geschäftsführerin)</p>
+      <div class="block">
+        <h2>Vertreten durch</h2>
+        <p>Shabnam Hassin (Geschäftsführerin)</p>
+      </div>
 
-      <h2>Kontakt</h2>
-      <p>E-Mail: <a href="mailto:info@sebauservice.de">info@sebauservice.de</a></p>
+      <div class="block">
+        <h2>Kontakt</h2>
+        <p>
+          Telefon: [TELEFONNUMMER EINTRAGEN]<br />
+          E-Mail: <a href="mailto:info@sebauservice.de">info@sebauservice.de</a>
+        </p>
+      </div>
 
-      <h2>Handelsregister</h2>
-      <p>
-        Registergericht: Amtsgericht Hamburg<br />
-        Registernummer: HRB 8636
-      </p>
+      <div class="block">
+        <h2>Handelsregister</h2>
+        <p>
+          Registergericht: Amtsgericht Hamburg<br />
+          Registernummer: HRB 8636
+        </p>
+      </div>
 
-      <h2>Umsatzsteuer-ID</h2>
-      <p>
-        Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:<br />
-        DE373561816
-      </p>
+      <div class="block">
+        <h2>Umsatzsteuer-ID</h2>
+        <p>
+          Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:<br />
+          DE373561816
+        </p>
+      </div>
+
+      <div class="block">
+        <h2>Streitschlichtung</h2>
+        <p>
+          Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+          <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">
+            https://ec.europa.eu/consumers/odr/
+          </a>.<br />
+          Unsere E-Mail-Adresse finden Sie oben im Impressum.<br /><br />
+          Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+          Verbraucherschlichtungsstelle teilzunehmen.
+        </p>
+      </div>
+
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .impressum-section {
-    padding: 80px 0 100px;
+  .impressum-hero {
+    background: var(--color-primary);
+    padding: 5rem 0 4rem;
   }
-  .impressum-section h1 {
-    margin-bottom: 48px;
-  }
-  .impressum-section h2 {
+
+  .impressum-hero .eyebrow {
+    color: var(--color-accent);
     font-size: 1rem;
     font-weight: 600;
-    color: var(--color-text-muted);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    margin-top: 40px;
-    margin-bottom: 8px;
+    margin-bottom: 0.75rem;
   }
-  .impressum-section p {
-    line-height: 1.7;
+
+  .impressum-hero h1 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
   }
-  .impressum-section a {
+
+  .impressum-section {
+    padding: 5rem 0 7rem;
+  }
+
+  .container {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  .block {
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  h2 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-text);
+  }
+
+  a {
     color: var(--color-accent);
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .impressum-hero {
+      padding: 3.5rem 0 2.5rem;
+    }
+
+    .impressum-hero h1 {
+      font-size: 2rem;
+    }
+
+    .impressum-section {
+      padding: 3rem 0 5rem;
+    }
   }
 </style>
