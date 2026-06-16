@@ -12,10 +12,10 @@ Die SE Bauservice GmbH mit Sitz in Hamburg (Kreuzweg 10, 20099 Hamburg) führt T
 
 ## Seiten
 
-- [Startseite](https://www.sebauservice.de/): Überblick über den Betrieb und die Leistungen.
-- [Leistungen](https://www.sebauservice.de/leistungen/): Trockenbau, Akustikbau und Abbrucharbeiten im Detail.
-- [Über uns](https://www.sebauservice.de/ueber-uns/): Vorstellung von Betrieb und Arbeitsweise.
-- [Kontakt](https://www.sebauservice.de/kontakt/): Anfrageformular und Kontaktdaten.
+- [Startseite](https://sebauservice.de/): Überblick über den Betrieb und die Leistungen.
+- [Leistungen](https://sebauservice.de/leistungen/): Trockenbau, Akustikbau und Abbrucharbeiten im Detail.
+- [Über uns](https://sebauservice.de/ueber-uns/): Vorstellung von Betrieb und Arbeitsweise.
+- [Kontakt](https://sebauservice.de/kontakt/): Anfrageformular und Kontaktdaten.
 
 ## Kontakt
 

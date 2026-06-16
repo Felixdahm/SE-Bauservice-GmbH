@@ -29,4 +29,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://www.sebauservice.de/sitemap-index.xml
+Sitemap: https://sebauservice.de/sitemap-index.xml

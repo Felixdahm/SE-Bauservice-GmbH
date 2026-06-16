@@ -4,6 +4,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.sebauservice.de',
+  site: 'https://sebauservice.de',
   integrations: [sitemap()],
 });
