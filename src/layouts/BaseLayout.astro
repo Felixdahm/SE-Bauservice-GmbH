@@ -8,30 +8,94 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'SE Bauservice GmbH – Trockenbau, Akustikbau und Abbrucharbeiten in Hamburg.' } = Astro.props;
+const { title, description = 'SE Bauservice GmbH – Bauunternehmen in Hamburg für Trockenbau, Akustikbau und Abbrucharbeiten.' } = Astro.props;
 
 const fullTitle = `${title} | SE Bauservice GmbH`;
+const siteUrl = (Astro.site?.toString() ?? 'https://sebauservice.de/').replace(/\/$/, '');
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL('/og-bild.jpg', Astro.site);
+const logoUrl = new URL('/logo.webp', Astro.site).toString();
 
-// Strukturierte Daten für die lokale Suche (Google "Handwerker in meiner Nähe")
-const localBusiness = {
+// Strukturierte Daten (schema.org) als verknüpfter Graph:
+//  - Organization: trägt das Logo, das Google rechts in der Knowledge-Box / neben dem Treffer zeigt.
+//  - LocalBusiness/GeneralContractor: für die lokale Suche ("Bauunternehmen Hamburg", "… in meiner Nähe").
+//  - WebSite: ordnet Domain und Betreiber eindeutig zu.
+const schema = {
   '@context': 'https://schema.org',
-  '@type': 'GeneralContractor',
-  name: 'SE Bauservice GmbH',
-  description: 'Trockenbau, Akustikbau und Abbrucharbeiten in Hamburg und Umgebung.',
-  url: Astro.site?.toString(),
-  email: 'info@sebauservice.de',
-  image: ogImageUrl.toString(),
-  logo: new URL('/favicon-96.png', Astro.site).toString(),
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Kreuzweg 10',
-    postalCode: '20099',
-    addressLocality: 'Hamburg',
-    addressCountry: 'DE',
-  },
-  areaServed: 'Hamburg und Umgebung',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'SE Bauservice GmbH',
+      url: `${siteUrl}/`,
+      email: 'info@sebauservice.de',
+      logo: {
+        '@type': 'ImageObject',
+        '@id': `${siteUrl}/#logo`,
+        url: logoUrl,
+        contentUrl: logoUrl,
+        width: 256,
+        height: 256,
+        caption: 'SE Bauservice GmbH',
+      },
+      image: { '@id': `${siteUrl}/#logo` },
+    },
+    {
+      '@type': ['GeneralContractor', 'LocalBusiness'],
+      '@id': `${siteUrl}/#business`,
+      name: 'SE Bauservice GmbH',
+      description: 'Bauunternehmen in Hamburg für Trockenbau, Akustikbau und Abbrucharbeiten – für Privatkunden und Gewerbe.',
+      url: `${siteUrl}/`,
+      email: 'info@sebauservice.de',
+      image: ogImageUrl.toString(),
+      logo: logoUrl,
+      parentOrganization: { '@id': `${siteUrl}/#organization` },
+      priceRange: '€€',
+      currenciesAccepted: 'EUR',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Kreuzweg 10',
+        postalCode: '20099',
+        addressLocality: 'Hamburg',
+        addressRegion: 'Hamburg',
+        addressCountry: 'DE',
+      },
+      // Hinweis: Koordinaten sind ein Näherungswert für 20099 Hamburg (St. Georg).
+      // Für maximale Genauigkeit später durch die exakten Koordinaten der Adresse ersetzen.
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 53.5527,
+        longitude: 10.0118,
+      },
+      areaServed: [
+        { '@type': 'City', name: 'Hamburg' },
+        'Hamburg und Umgebung',
+      ],
+      knowsAbout: [
+        'Trockenbau',
+        'Akustikbau',
+        'Schallschutz',
+        'Abbrucharbeiten',
+        'Rückbau',
+        'Trennwände',
+        'Abgehängte Decken',
+      ],
+      makesOffer: [
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Trockenbau', serviceType: 'Trockenbau' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Akustikbau', serviceType: 'Akustikbau und Schallschutz' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Abbrucharbeiten', serviceType: 'Abbruch und Rückbau' } },
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: `${siteUrl}/`,
+      name: 'SE Bauservice GmbH',
+      description,
+      inLanguage: 'de-DE',
+      publisher: { '@id': `${siteUrl}/#organization` },
+    },
+  ],
 };
 ---
 
@@ -42,6 +106,16 @@ const localBusiness = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{fullTitle}</title>
+
+    <!-- Crawling / Indexierung: alles erlauben, große Bildvorschau zulassen -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="author" content="SE Bauservice GmbH" />
+    <meta name="theme-color" content="#1A2733" />
+
+    <!-- Lokale Signale für die regionale Suche (Hamburg) -->
+    <meta name="geo.region" content="DE-HH" />
+    <meta name="geo.placename" content="Hamburg" />
+
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -58,6 +132,7 @@ const localBusiness = {
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="SE Bauservice GmbH – Trockenbau, Akustikbau und Abbruch in Hamburg" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -65,7 +140,7 @@ const localBusiness = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body>
     <Header />
